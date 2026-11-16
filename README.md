@@ -85,8 +85,8 @@ The following decisions were made while implementing the assignment:
 8. Money calculations use integer minor units (paise/cents) to avoid floating-point precision issues.
 9. The balance is updated locally after a successful order because the mock API returns fixed balances.
 10. The order request has a 10-second timeout.
-11. The application displays a timeout message explaining that the order status could not be confirmed.
-12. An `Idempotency-Key` header is sent with order requests. The mock API ignores this header, but a real backend could use it to prevent duplicate orders.
+11. A timeout is treated as a failure, as the assignment asks. But a timeout does not prove the order failed: the server may still have placed it and only replied late. If the app said "order failed", the user might place it again and pay twice. So the message says the order **could not be confirmed** instead.
+12. An `Idempotency-Key` header is sent with each order, and **Try Again reuses the same key**. The mock API ignores this header, but a real backend could use it to recognise a retry and not create a duplicate order. In production I would also check the order status before allowing a retry after a timeout.
 13. Flutter Navigator is used for navigation between the three screens.
 14. The "Enter an amount" error is shown only after the user starts typing, so the screen does not open with an error. Continue stays disabled.
 15. Only digits and one decimal point can be typed. Thousands separators like `5,000` are not accepted.
