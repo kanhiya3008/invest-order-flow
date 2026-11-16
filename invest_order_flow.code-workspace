@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "invest_order_flow",
+			"path": "."
+		},
+		{
+			"name": "lib",
+			"path": "../../Downloads/invest_order_flow/lib"
+		}
+	],
+	"settings": {}
+}
